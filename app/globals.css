@@ -1,0 +1,69 @@
+@import "tailwindcss";
+@import "pretendard/dist/web/variable/pretendardvariable-dynamic-subset.css";
+
+/* 값의 기준 문서: design-system.md */
+@theme {
+  --color-leaf-50: #f3f6f1;
+  --color-leaf-100: #e3ebe0;
+  --color-leaf-300: #a9c2a5;
+  --color-leaf-500: #5f8d5e;
+  --color-leaf-600: #4f7a4e;
+  --color-leaf-700: #3e623e;
+  --color-leaf-900: #1f3320;
+  --color-cream: #ece7a9;
+  --color-cream-soft: #f7f4d6;
+  --color-paper: #ffffff;
+  --color-mist: #c9ced1;
+  --color-amber: #e0a458;
+  --color-clay: #c9725b;
+  --color-sky: #7fa7c9;
+
+  --font-sans: "Pretendard Variable", Pretendard, system-ui, -apple-system, sans-serif;
+
+  --text-display: 44px;
+  --text-display--line-height: 1.05;
+  --text-display--font-weight: 800;
+  --text-title: 26px;
+  --text-title--line-height: 1.2;
+  --text-heading: 18px;
+  --text-heading--line-height: 1.3;
+  --text-body: 15px;
+  --text-body--line-height: 1.55;
+  --text-caption: 12px;
+  --text-caption--line-height: 1.4;
+
+  --radius-panel: 32px;
+  --radius-card: 24px;
+  --radius-button: 18px;
+  --radius-badge: 10px;
+
+  --shadow-float: 0 12px 32px -12px rgb(31 51 32 / 0.35);
+}
+
+html {
+  background: var(--color-mist);
+  color: var(--color-leaf-900);
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  font-family: var(--font-sans);
+  min-height: 100dvh;
+  word-break: keep-all;
+}
+
+.no-scrollbar {
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+input[type="range"] {
+  accent-color: var(--color-leaf-500);
+}
+
+:focus-visible {
+  outline: 3px solid var(--color-cream);
+  outline-offset: 2px;
+}
