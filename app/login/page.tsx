@@ -5,7 +5,7 @@ import { ChevronIcon } from "@/components/Icons";
 import { currentProfile } from "@/lib/auth";
 import { isDemoMode } from "@/lib/data";
 import { DEMO_ACCOUNTS } from "@/lib/data/demo";
-import EmailLoginForm from "./EmailLoginForm";
+import AuthForm from "./AuthForm";
 
 export default async function LoginPage() {
   const me = await currentProfile();
@@ -51,7 +51,7 @@ export default async function LoginPage() {
             </ul>
           </>
         ) : (
-          <EmailLoginForm />
+          <AuthForm />
         )}
       </section>
     </div>

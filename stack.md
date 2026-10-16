@@ -24,7 +24,7 @@
 | 항목 | 선택 | 비고 |
 |---|---|---|
 | DB | Supabase Postgres 17 | `Kunnect_Roh` (ref `mjnmzlggjkkxrhylbvac`, ap-northeast-2, ADR-006). 마이그레이션은 `supabase/migrations/` |
-| 인증 | Supabase Auth | 이메일 매직링크. 리디렉션 URL `http://localhost:3000/auth/callback` 대시보드 등록 필요 |
+| 인증 | Supabase Auth | 이메일 + 비밀번호 (ADR-007). 이메일 확인을 켜 두면 확인 링크용 리디렉션 URL `http://localhost:3000/auth/callback`을 대시보드에 등록 |
 | 권한 | Row Level Security | 테이블 11개 모두 활성화, 정책 21개. 검증: `supabase/tests/rls_test.sql` |
 
 ### 2.1 원격 DB 적용 상태 (2026-10-16, ADR-005·006)
@@ -91,7 +91,7 @@
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | 클라이언트 | anon 키 (JWT), `.env.local`에 입력됨 |
 | `SUPABASE_SERVICE_ROLE_KEY` | **서버 전용** | 디바이스 API·시뮬레이터. `.env.local`에 입력됨. 비어 있으면 데모 모드 |
 | `APP_TIMEZONE` | 서버 | `Asia/Seoul` |
-| `NEXT_PUBLIC_SITE_URL` | 서버 | 매직링크 리디렉션 기준 주소 (`http://localhost:3000`) |
+| `NEXT_PUBLIC_SITE_URL` | 서버 | 가입 확인 메일 링크의 기준 주소 (`http://localhost:3000`) |
 | `NEXT_PUBLIC_ENABLE_SIMULATOR` | 서버 | `true`면 실제 DB 모드에서도 시뮬레이터 노출 (데모 모드는 항상 노출) |
 
 `.env.local`은 `.gitignore` 대상이다. 서비스 롤 키는 저장소에 커밋하지 않는다 (ADR-005).

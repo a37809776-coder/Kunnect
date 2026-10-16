@@ -5,6 +5,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 import { DEMO_COOKIE, requireRole } from "@/lib/auth";
+import { authErrorMessage, formString, signInSchema, signUpSchema } from "@/lib/credentials";
 import { getRepo, isDemoMode, simulatorEnabled } from "@/lib/data";
 import { DEMO_ACCOUNTS } from "@/lib/data/demo";
 import { processReading } from "@/lib/device/processReading";
@@ -24,15 +25,40 @@ export async function demoLogin(formData: FormData) {
   redirect(id === "u-staff" ? "/org" : "/");
 }
 
-export async function emailLogin(_: unknown, formData: FormData): Promise<ActionResult> {
-  const email = z.string().email().safeParse(formData.get("email"));
-  if (!email.success) return { ok: false, error: "이메일 주소를 확인해 주세요" };
-  const origin = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
-  const { error } = await (await userClient()).auth.signInWithOtp({
-    email: email.data,
-    options: { emailRedirectTo: `${origin}/auth/callback` },
+/** 이메일·비밀번호 로그인 (ADR-007) — 성공하면 역할에 맞는 홈으로 간다 */
+export async function passwordSignIn(_: unknown, formData: FormData): Promise<ActionResult> {
+  const parsed = signInSchema.safeParse({ email: formString(formData, "email"), password: formString(formData, "password") });
+  if (!parsed.success) return { ok: false, error: parsed.error.issues[0].message };
+  const { error } = await (await userClient()).auth.signInWithPassword(parsed.data);
+  if (error) return { ok: false, error: authErrorMessage(error) };
+  redirect("/"); // 스태프는 requireRole이 /org로 보낸다
+}
+
+export type SignUpResult = ActionResult<{ needsEmailConfirm: boolean }>;
+
+/** 이메일·비밀번호 가입. 프로젝트가 이메일 확인을 켜 두었으면 확인 메일 안내로 끝난다 */
+export async function passwordSignUp(_: unknown, formData: FormData): Promise<SignUpResult> {
+  const parsed = signUpSchema.safeParse({
+    displayName: formString(formData, "displayName"),
+    email: formString(formData, "email"),
+    password: formString(formData, "password"),
+    passwordConfirm: formString(formData, "passwordConfirm"),
   });
-  return error ? { ok: false, error: "메일을 보내지 못했어요. 잠시 후 다시 시도해 주세요" } : { ok: true };
+  if (!parsed.success) return { ok: false, error: parsed.error.issues[0].message };
+  const { displayName, email, password } = parsed.data;
+  const origin = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+  const { data, error } = await (await userClient()).auth.signUp({
+    email,
+    password,
+    options: { data: { display_name: displayName }, emailRedirectTo: `${origin}/auth/callback` },
+  });
+  if (error) return { ok: false, error: authErrorMessage(error) };
+  // 이메일 확인이 켜진 프로젝트는 이미 가입된 주소에도 오류 대신 identities가 빈 사용자를 돌려준다
+  if (data.user && data.user.identities?.length === 0) {
+    return { ok: false, error: authErrorMessage({ code: "user_already_exists" }) };
+  }
+  if (!data.session) return { ok: true, data: { needsEmailConfirm: true } };
+  redirect("/onboarding");
 }
 
 export async function logout() {
