@@ -15,8 +15,8 @@
 - [ ] HW 부품 선정·BOM 작성·발주 (박귀환)
 - [x] 참여자·기관 화면 와이어프레임 (노현서)
 - [x] Next.js + TS + Tailwind 프로젝트 생성, Vercel 연결 (노현서)
-- [ ] Supabase 프로젝트 생성, 환경변수 설정 (정해찬) — 프로젝트·URL·publishable 키 완료, service_role 키 입력 남음
-- [x] 마이그레이션: design §3 테이블 전체 (정해찬) — kunnect-green's Project에 1~4 적용 + 시드 완료
+- [x] Supabase 프로젝트 생성, 환경변수 설정 (정해찬) — `Kunnect_Roh`, `.env.local` 키 입력 완료
+- [x] 마이그레이션: design §3 테이블 전체 (정해찬) — `Kunnect_Roh`에 1~4 적용 + 시드 완료
 - [x] RLS 정책 작성 (정해찬) — S-01~S-08
 - [x] 시드: organizations(그린테라피), plant_species, 테스트 디바이스 (정해찬)
 

@@ -23,9 +23,9 @@ http://localhost:3000 — `.env.local`이 없으면 **데모 모드**(메모리 
 
 ## Supabase 연결
 
-kunnect-green's Project에는 마이그레이션 1~4와 시드가 이미 적용돼 있다.
+Supabase 프로젝트 `Kunnect_Roh`(ref `mjnmzlggjkkxrhylbvac`)에 마이그레이션 1~4와 시드가 이미 적용돼 있다 (ADR-006).
 
-1. `.env.local`의 `SUPABASE_SERVICE_ROLE_KEY`에 대시보드의 secret 키를 넣는다 (비어 있으면 데모 모드)
+1. `.env.example`을 `.env.local`로 복사하고 URL·anon 키·service_role 키를 넣는다 (service_role 키가 비어 있으면 데모 모드)
 2. 대시보드 Authentication → URL Configuration에 `http://localhost:3000/auth/callback` 추가
 3. 기관 스태프는 가입 후 SQL로 지정: `update profiles set role = 'org_staff', organization_id = '<기관 id>' where id = '<user id>';`
 4. 디바이스 등록은 `supabase/seed.sql` 하단 주석 참고 (토큰·페어링 코드는 해시로만 저장)

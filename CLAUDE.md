@@ -104,4 +104,4 @@ npx tsx scripts/inject-reading.ts --serial PC-0001 --moisture 20
 - 의미 있는 결정은 adr.md에, 하루 작업 기록은 log.md에 남긴다.
 - 현재 Phase: **Phase 0~3 소프트웨어 1차 완료**, Supabase 연결·E2E·HW 남음 — todo.md 참고
 - 환경변수가 없으면 데모 모드(`lib/data/demo.ts`)로 실행된다. 데이터 접근은 항상 `lib/data/repo.ts` 인터페이스를 거친다.
-- 원격 DB(`kunnect-green's Project`)에 마이그레이션 1~4·시드 적용 완료, RLS 테스트 통과 (design.md §3.2, ADR-005). 스키마는 새 마이그레이션 파일로만 바꾸고, 정책을 바꾸면 `supabase/tests/rls_test.sql`을 다시 실행한다.
+- 원격 DB(`Kunnect_Roh`, ref `mjnmzlggjkkxrhylbvac`)에 마이그레이션 1~4·시드 적용 완료, RLS 테스트 통과 (design.md §3.2, ADR-005·006). 스키마는 새 마이그레이션 파일로만 바꾸고, 정책을 바꾸면 `supabase/tests/rls_test.sql`을 다시 실행한다.

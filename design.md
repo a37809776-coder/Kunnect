@@ -152,9 +152,9 @@ org_notices (기관 → 참여자 안내)
 - `plants`는 내 디바이스만 연결할 수 있다 (`device_id`의 소유자 확인).
 - 참여자는 `profiles.display_name`만 수정할 수 있다 (`role`·`organization_id`는 컬럼 권한으로 차단).
 
-### 3.2 원격 DB 적용 상태 (2026-10-16, ADR-005)
+### 3.2 원격 DB 적용 상태 (2026-10-16, ADR-005·006)
 
-대상: `kunnect-green's Project` (ref `ixuwzhzprxowmtqeqjxy`, ap-northeast-2). 스키마는 `supabase/migrations/` 파일로만 바꾼다.
+대상: `Kunnect_Roh` (ref `mjnmzlggjkkxrhylbvac`, ap-northeast-2). 스키마는 `supabase/migrations/` 파일로만 바꾼다. (이전 대상 `kunnect-green's Project`에도 같은 스키마가 있으나 앱은 쓰지 않는다 — ADR-006)
 
 | 항목 | 상태 |
 |---|---|
@@ -166,8 +166,8 @@ org_notices (기관 → 참여자 안내)
 | 가입 트리거 | `on_auth_user_created` → `profiles` 자동 생성 (역할 participant) |
 | 시드 | 기관 1곳 (`(주)그린테라피`, 초대코드 `GREEN2026`), 식물 종 3개. 디바이스는 시드에 없음 |
 | RLS 검증 | `supabase/tests/rls_test.sql` — 27개 체크 통과, 롤백으로 잔여 데이터 없음 |
-| 보안 어드바이저 | 남은 경고 7건: 로그인 사용자용 함수 6건(의도), `rls_auto_enable` 1건(원래 있던 함수, 이 프로젝트가 만든 것 아님) |
-| 앱 연결 | URL·publishable 키는 `.env.local`에 있음. 서비스 롤 키 미입력 → 앱은 아직 데모 모드 |
+| 보안 어드바이저 | 남은 경고 6건: 로그인 사용자용 함수(앱 RPC 4 + RLS 헬퍼 2), 모두 의도된 것 |
+| 앱 연결 | URL·anon 키·서비스 롤 키 모두 `.env.local`에 있음 → 앱은 실제 DB 모드로 실행. 앱에서의 실제 DB 동작은 아직 미검증 |
 
 ---
 

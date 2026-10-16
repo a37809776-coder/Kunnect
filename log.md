@@ -4,6 +4,10 @@
 
 ---
 
+## 2026-10-16 (3) · Claude Code
+- 한 일: 앱 접속 대상을 새 프로젝트 `Kunnect_Roh`(ref `mjnmzlggjkkxrhylbvac`)로 변경. `.env.local`에 URL·anon·service_role 키 입력. 같은 마이그레이션 1~4 + 시드 적용, RLS 테스트 27개 체크 통과(롤백, 잔여 데이터 없음). 보안 어드바이저 경고는 의도된 6건만.
+- 다음: 앱을 실제 DB 모드로 실행해 로그인·온보딩·디바이스 API 확인, Auth 리디렉션 URL 등록, 스태프 계정 지정.
+
 ## 2026-10-16 (2) · Claude Code
 - 한 일: kunnect-green's Project에 마이그레이션 1~4 + 시드(기관 1, 식물 종 3) 적용. `.env.local`에 URL·publishable 키 기록. RLS 테스트 스크립트 작성·실행 → 27개 체크 통과(롤백, 잔여 데이터 없음).
 - 막힌 것 / 해결: 적용 전 검토에서 plants 정책이 남의 디바이스 연결을 막지 못하는 구멍 발견 → device 소유 확인 추가. 보안 어드바이저가 anon의 SECURITY DEFINER 함수 실행을 경고 → 마이그레이션 4로 권한 정리.
